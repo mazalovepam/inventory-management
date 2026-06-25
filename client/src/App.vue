@@ -13,6 +13,14 @@
           <router-link to="/inventory" :class="{ active: $route.path === '/inventory' }">
             {{ t('nav.inventory') }}
           </router-link>
+          <router-link to="/alerts" :class="{ active: $route.path === '/alerts' }">
+            <span class="nav-link-content">
+              {{ t('nav.alerts') }}
+              <span v-if="lowStockCount > 0" class="notification-badge">
+                {{ lowStockCount }}
+              </span>
+            </span>
+          </router-link>
           <router-link to="/orders" :class="{ active: $route.path === '/orders' }">
             {{ t('nav.orders') }}
           </router-link>
@@ -83,6 +91,7 @@ export default {
     const showProfileDetails = ref(false)
     const showTasks = ref(false)
     const apiTasks = ref([])
+    const lowStockCount = ref(0)
 
     // Merge mock tasks from currentUser with API tasks
     const tasks = computed(() => {
@@ -94,6 +103,15 @@ export default {
         apiTasks.value = await api.getTasks()
       } catch (err) {
         console.error('Failed to load tasks:', err)
+      }
+    }
+
+    const loadLowStockCount = async () => {
+      try {
+        const summary = await api.getDashboardSummary()
+        lowStockCount.value = summary.low_stock_items
+      } catch (err) {
+        console.error('Failed to load low stock count:', err)
       }
     }
 
@@ -149,13 +167,17 @@ export default {
       }
     }
 
-    onMounted(loadTasks)
+    onMounted(() => {
+      loadTasks()
+      loadLowStockCount()
+    })
 
     return {
       t,
       showProfileDetails,
       showTasks,
       tasks,
+      lowStockCount,
       addTask,
       deleteTask,
       toggleTask
@@ -267,6 +289,26 @@ body {
   right: 0;
   height: 2px;
   background: #2563eb;
+}
+
+.nav-link-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.notification-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 0.375rem;
+  background: #ef4444;
+  color: white;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 .main-content {

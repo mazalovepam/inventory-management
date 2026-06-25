@@ -3,6 +3,7 @@ export default {
   nav: {
     overview: '概要',
     inventory: '在庫',
+    alerts: '在庫不足警告',
     orders: '注文',
     finance: '財務',
     demandForecast: '需要予測',
@@ -99,6 +100,26 @@ export default {
       location: '場所',
       status: 'ステータス'
     }
+  },
+
+  // Low Stock Alerts
+  alerts: {
+    title: '在庫不足警告',
+    subtitle: '即座の対応が必要な品目を監視',
+    totalAlerts: '警告総数',
+    criticalAlerts: '緊急警告',
+    warningAlerts: '注意警告',
+    alertsList: '在庫不足品目',
+    searchPlaceholder: 'SKUまたは品目名で検索...',
+    allStocked: 'すべての品目が適切に在庫されています！',
+    sku: 'SKU',
+    itemName: '品目名',
+    category: 'カテゴリ',
+    warehouse: '倉庫',
+    currentStock: '現在の在庫',
+    reorderPoint: '再注文点',
+    shortage: '不足',
+    urgency: '緊急度'
   },
 
   // Orders
