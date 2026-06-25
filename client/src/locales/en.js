@@ -3,6 +3,7 @@ export default {
   nav: {
     overview: 'Overview',
     inventory: 'Inventory',
+    alerts: 'Low Stock Alerts',
     orders: 'Orders',
     finance: 'Finance',
     demandForecast: 'Demand Forecast',
@@ -99,6 +100,26 @@ export default {
       location: 'Location',
       status: 'Status'
     }
+  },
+
+  // Low Stock Alerts
+  alerts: {
+    title: 'Low Stock Alerts',
+    subtitle: 'Monitor items that need immediate attention',
+    totalAlerts: 'Total Alerts',
+    criticalAlerts: 'Critical Alerts',
+    warningAlerts: 'Warning Alerts',
+    alertsList: 'Low Stock Items',
+    searchPlaceholder: 'Search by SKU or item name...',
+    allStocked: 'All items are properly stocked!',
+    sku: 'SKU',
+    itemName: 'Item Name',
+    category: 'Category',
+    warehouse: 'Warehouse',
+    currentStock: 'Current Stock',
+    reorderPoint: 'Reorder Point',
+    shortage: 'Shortage',
+    urgency: 'Urgency'
   },
 
   // Orders
@@ -309,6 +330,29 @@ export default {
     english: 'English',
     japanese: 'Japanese',
     selectLanguage: 'Select Language'
+  },
+
+  // Reports
+  reports: {
+    title: 'Performance Reports',
+    description: 'View quarterly performance metrics and monthly trends',
+    quarterlyPerformance: 'Quarterly Performance',
+    monthlyRevenueTrend: 'Monthly Revenue Trend',
+    monthOverMonthAnalysis: 'Month-over-Month Analysis',
+    quarter: 'Quarter',
+    totalOrders: 'Total Orders',
+    totalRevenue: 'Total Revenue',
+    avgOrderValue: 'Avg Order Value',
+    fulfillmentRate: 'Fulfillment Rate',
+    month: 'Month',
+    orders: 'Orders',
+    revenue: 'Revenue',
+    change: 'Change',
+    growthRate: 'Growth Rate',
+    totalRevenueYTD: 'Total Revenue (YTD)',
+    avgMonthlyRevenue: 'Avg Monthly Revenue',
+    totalOrdersYTD: 'Total Orders (YTD)',
+    bestPerformingQuarter: 'Best Performing Quarter'
   },
 
   // Common

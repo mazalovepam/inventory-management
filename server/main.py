@@ -67,6 +67,8 @@ class InventoryItem(BaseModel):
     unit_cost: float
     location: str
     last_updated: str
+    shortage: Optional[int] = None
+    shortage_percentage: Optional[float] = None
 
 class Order(BaseModel):
     id: str
@@ -132,6 +134,34 @@ def get_inventory(
 ):
     """Get all inventory items with optional filtering"""
     return apply_filters(inventory_items, warehouse, category)
+
+@app.get("/api/inventory/low-stock", response_model=List[InventoryItem])
+def get_low_stock_items(
+    warehouse: Optional[str] = None,
+    category: Optional[str] = None
+):
+    """
+    Get inventory items at or below their reorder points.
+    Returns items with calculated shortage metrics, sorted by urgency.
+    """
+    # Filter to low-stock items only
+    low_stock = [item for item in inventory_items
+                 if item["quantity_on_hand"] <= item["reorder_point"]]
+
+    # Apply standard warehouse/category filters
+    filtered = apply_filters(low_stock, warehouse, category)
+
+    # Calculate shortage metrics for each item
+    for item in filtered:
+        shortage = item["reorder_point"] - item["quantity_on_hand"]
+        shortage_percentage = (shortage / item["reorder_point"]) * 100 if item["reorder_point"] > 0 else 0
+        item["shortage"] = shortage
+        item["shortage_percentage"] = round(shortage_percentage, 1)
+
+    # Sort by shortage percentage (highest urgency first)
+    filtered.sort(key=lambda x: x.get("shortage_percentage", 0), reverse=True)
+
+    return filtered
 
 @app.get("/api/inventory/{item_id}", response_model=InventoryItem)
 def get_inventory_item(item_id: str):

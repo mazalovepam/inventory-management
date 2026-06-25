@@ -3,6 +3,7 @@ export default {
   nav: {
     overview: '概要',
     inventory: '在庫',
+    alerts: '在庫不足警告',
     orders: '注文',
     finance: '財務',
     demandForecast: '需要予測',
@@ -99,6 +100,26 @@ export default {
       location: '場所',
       status: 'ステータス'
     }
+  },
+
+  // Low Stock Alerts
+  alerts: {
+    title: '在庫不足警告',
+    subtitle: '即座の対応が必要な品目を監視',
+    totalAlerts: '警告総数',
+    criticalAlerts: '緊急警告',
+    warningAlerts: '注意警告',
+    alertsList: '在庫不足品目',
+    searchPlaceholder: 'SKUまたは品目名で検索...',
+    allStocked: 'すべての品目が適切に在庫されています！',
+    sku: 'SKU',
+    itemName: '品目名',
+    category: 'カテゴリ',
+    warehouse: '倉庫',
+    currentStock: '現在の在庫',
+    reorderPoint: '再注文点',
+    shortage: '不足',
+    urgency: '緊急度'
   },
 
   // Orders
@@ -309,6 +330,29 @@ export default {
     english: 'English',
     japanese: '日本語',
     selectLanguage: '言語を選択'
+  },
+
+  // Reports
+  reports: {
+    title: 'パフォーマンスレポート',
+    description: '四半期のパフォーマンス指標と月次トレンドを表示',
+    quarterlyPerformance: '四半期パフォーマンス',
+    monthlyRevenueTrend: '月次収益トレンド',
+    monthOverMonthAnalysis: '前月比分析',
+    quarter: '四半期',
+    totalOrders: '総注文数',
+    totalRevenue: '総収益',
+    avgOrderValue: '平均注文額',
+    fulfillmentRate: '充足率',
+    month: '月',
+    orders: '注文数',
+    revenue: '収益',
+    change: '変化',
+    growthRate: '成長率',
+    totalRevenueYTD: '年初来総収益',
+    avgMonthlyRevenue: '平均月次収益',
+    totalOrdersYTD: '年初来総注文数',
+    bestPerformingQuarter: '最高パフォーマンス四半期'
   },
 
   // Common

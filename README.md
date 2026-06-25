@@ -14,6 +14,7 @@ A full-stack demo application for a Claude Code workshop — inventory managemen
 
 - Dashboard with interactive filtering and key metrics
 - Inventory tracking across multiple warehouses
+- **Low-Stock Alerts** with urgency-based prioritization and visual indicators
 - Order management with status tracking
 - Demand forecasting with trend analysis
 - Backlog monitoring
@@ -51,22 +52,58 @@ npm run dev
 All endpoints support optional filtering via query params: `warehouse`, `category`, `status`, `month`
 
 - `GET /api/inventory` - Inventory items
+- `GET /api/inventory/low-stock` - Low-stock items with shortage metrics (sorted by urgency)
 - `GET /api/orders` - Orders
 - `GET /api/demand` - Demand forecasts
 - `GET /api/backlog` - Backlog items
-- `GET /api/dashboard/summary` - Summary statistics
+- `GET /api/dashboard/summary` - Summary statistics (includes low_stock_items count)
 - `GET /api/spending/*` - Spending data
+
+### Low-Stock Alerts Endpoint
+
+`GET /api/inventory/low-stock?warehouse={warehouse}&category={category}`
+
+Returns inventory items where `quantity_on_hand ≤ reorder_point`, with calculated fields:
+- `shortage`: Units below reorder point (reorder_point - quantity_on_hand)
+- `shortage_percentage`: Percentage below reorder point ((shortage / reorder_point) × 100)
+
+Items are sorted by urgency (highest shortage percentage first).
+
+**Example response:**
+```json
+[
+  {
+    "id": "32",
+    "sku": "PSU-508",
+    "name": "Battery Backup Power Supply",
+    "warehouse": "Tokyo",
+    "quantity_on_hand": 75,
+    "reorder_point": 100,
+    "shortage": 25,
+    "shortage_percentage": 25.0
+  }
+]
+```
 
 ## Demo Data
 
 Mock data includes:
-- Inventory items (Circuit Boards, Sensors, Actuators, Controllers)
+- Inventory items (Circuit Boards, Sensors, Actuators, Controllers, Power Supplies)
+- 32 inventory items across 3 warehouses (San Francisco, London, Tokyo)
+- 4 items currently at/below reorder points (low-stock alerts)
 - Orders spanning 12 months (Delivered, Shipped, Processing, Backordered)
 - Demand forecasts with trends
 - Backlog items
 - Spending transactions
 
 Data files: `server/data/*.json`
+
+### Low-Stock Alert Thresholds
+
+The system uses a three-tier severity system:
+- **Critical** (Red): >30% below reorder point
+- **Warning** (Orange): 10-30% below reorder point
+- **Low** (Yellow): 0-10% below reorder point (at or just below threshold)
 
 ## Production Build
 
